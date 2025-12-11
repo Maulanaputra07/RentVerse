@@ -1,13 +1,6 @@
-import roomImage from '/images/image10.png'
-import bathupIcon from '/icons/bathup.png'
-import bedIcon from '/icons/bed.png'
-import frameIcon from '/icons/frame.png'
-
 export default function Card({ status, title, location, price, priceUnit, bedrooms, bathrooms, sqft, image }) {
     return (
         <div className="w-80 h-[400px] bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 flex flex-col">
-            
-            {/* IMAGE */}
             <div className="relative w-full h-48">
                 <img 
                     src={image} 
@@ -19,10 +12,7 @@ export default function Card({ status, title, location, price, priceUnit, bedroo
                 </span>
             </div>
 
-            {/* CONTENT */}
             <div className="flex flex-col justify-between flex-1 p-5 text-left">
-
-                {/* ─── TOP CONTENT ─── */}
                 <div>
                     <h2 className="font-satoshi font-semibold text-lg">
                         {title}
@@ -38,10 +28,7 @@ export default function Card({ status, title, location, price, priceUnit, bedroo
                     </p>
                 </div>
 
-                {/* ─── FIXED BOTTOM DETAILS ─── */}
                 <div className="flex items-center justify-between mt-2 pt-2 ">
-                    
-                    {/* Bedrooms */}
                     <div className="flex flex-col items-center text-sm">
                         <div className="flex items-center gap-1">
                             <img src="/icons/bed.png" className="w-5 h-5" />
@@ -50,7 +37,6 @@ export default function Card({ status, title, location, price, priceUnit, bedroo
                         <span className="text-gray-500 text-xs">Bedrooms</span>
                     </div>
 
-                    {/* Bathrooms */}
                     <div className="flex flex-col items-center text-sm">
                         <div className="flex items-center gap-1">
                             <img src="/icons/bathup.png" className="w-5 h-5" />
@@ -59,7 +45,6 @@ export default function Card({ status, title, location, price, priceUnit, bedroo
                         <span className="text-gray-500 text-xs">Bathrooms</span>
                     </div>
 
-                    {/* Area */}
                     <div className="flex flex-col items-center text-sm">
                         <div className="flex items-center gap-1">
                             <img src="/icons/frame.png" className="w-5 h-5" />
@@ -67,10 +52,8 @@ export default function Card({ status, title, location, price, priceUnit, bedroo
                         </div>
                         <span className="text-gray-500 text-xs">Total Area</span>
                     </div>
-
                 </div>
             </div>
-
         </div>
     );
 }

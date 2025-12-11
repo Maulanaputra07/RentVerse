@@ -28,13 +28,13 @@ export default function Navbar(){
 
             <div className='hidden md:flex items-center justify-end gap-4'>
                 <NavLink to="/login">
-                    <button className='text-main border-main border-2 font-semibold px-5 py-2 rounded-xl'>
+                    <button className='text-main border-main border-2 font-semibold px-5 py-2 rounded-xl hover:cursor-pointer'>
                         Login
                     </button>
                 </NavLink>
 
                 <NavLink to="/register">
-                    <button className='bg-main text-white border-main border-2 font-semibold px-5 py-2 rounded-xl'>
+                    <button className='bg-main text-white border-main border-2 font-semibold px-5 py-2 rounded-xl hover:cursor-pointer'>
                         Register
                     </button>
                 </NavLink>

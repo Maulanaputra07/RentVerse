@@ -1,18 +1,20 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import AuthAPI from "../../../api/endpoints/auth";
 import Swal from "sweetalert2";
 
 export default function LoginPage() {
     const [showPassword, setShowPassword] = useState(false);
+    const [agree, setAgree] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [confirmPassword, setConfrimPassword] = useState("");
+
 
     const navigate = useNavigate()
 
     const handleLogin = async () => {
 
-        // VALIDASI — semuanya pakai SweetAlert
         if (!email) {
             return Swal.fire({
                 icon: "warning",
@@ -37,7 +39,21 @@ export default function LoginPage() {
             });
         }
 
-        // SHOW LOADING
+        if (!confirmPassword) {
+            return Swal.fire({
+                icon: "warning",
+                title: "Konfirmasi password wajib diisi!",
+            });
+        }
+
+        if (password !== confirmPassword) {
+            return Swal.fire({
+                icon: "error",
+                title: "Password tidak cocok!",
+                text: "Pastikan password dan confirm password sama."
+            });
+        }
+
         Swal.fire({
             title: "Logging in...",
             text: "Please wait",
@@ -45,7 +61,6 @@ export default function LoginPage() {
             didOpen: () => Swal.showLoading()
         });
 
-        // API REQUEST
         try {
             const res = await AuthAPI.login({ email, password });
 
@@ -54,10 +69,8 @@ export default function LoginPage() {
 
             localStorage.setItem("user", JSON.stringify(user));
 
-            // TUTUP LOADING
             Swal.close();
 
-            // POPUP SUCCESS
             Swal.fire({
                 icon: "success",
                 title: "Login Berhasil!",
@@ -70,7 +83,6 @@ export default function LoginPage() {
             if (user.role === "Property Owner") navigate("/owner");
 
         } catch (err) {
-            // TUTUP LOADING OTOMATIS & TAMPILKAN ERROR
             Swal.fire({
                 icon: "error",
                 title: "Login gagal!",
@@ -141,25 +153,38 @@ export default function LoginPage() {
                         </span>
                     </div>
 
-                    {/* Confirm Password */}
                     <div className="mb-5">
                         <label className="text-sm font-semibold">Confirm Password</label>
                         <input 
                             type={showPassword ? "text" : "password"}
                             placeholder="*************"
+                            onChange={(e) => setConfrimPassword(e.target.value)}
+                            value={confirmPassword}
                             className="w-full border p-3 rounded-lg mt-1 focus:ring-2 focus:ring-main outline-none"
                         />
                     </div>
 
-                    {/* Terms */}
-                    <p className="text-xs text-gray-600 mt-2">
-                        By registering, I agree to{" "}
-                        <span className="text-main font-semibold cursor-pointer">Rentverse Terms & Conditions</span> 
-                        {" "}and{" "}
-                        <span className="text-main font-semibold cursor-pointer">Privacy Policy</span>.
-                    </p>
+                    <div className="mt-3 flex items-start gap-2">
+                        <input
+                            type="checkbox"
+                            id="agree"
+                            className="mt-1 w-4 h-4 text-main border-gray-300 rounded focus:ring-main accent-main"
+                            checked={agree}
+                            onChange={(e) => setAgree(e.target.checked)}
+                        />
 
-                    {/* Login Button */}
+                        <label htmlFor="agree" className="text-xs text-gray-600 leading-5">
+                            By registering, I agree to{" "}
+                            <span className="text-main font-semibold cursor-pointer">
+                                Rentverse Terms & Conditions
+                            </span>{" "}
+                            and{" "}
+                            <span className="text-main font-semibold cursor-pointer">
+                                Privacy Policy
+                            </span>.
+                        </label>
+                    </div>
+
                     <button
                         onClick={handleLogin}
                         className="w-full bg-main text-white font-semibold py-3 rounded-lg mt-5 hover:opacity-90">
@@ -168,7 +193,9 @@ export default function LoginPage() {
 
                     <p className="text-center text-sm mt-4 text-gray-600">
                         Don't have a Rentverse account yet?
-                        <span className="text-main font-semibold ml-1 cursor-pointer">Register</span>
+                        <NavLink to={"/register"}>
+                            <span className="text-main font-semibold ml-1 cursor-pointer">Register</span>
+                        </NavLink>
                     </p>
 
                 </div>

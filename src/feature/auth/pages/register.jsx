@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import AuthAPI from "../../../api/endpoints/auth";
 import Swal from "sweetalert2";
 
@@ -94,7 +94,6 @@ export default function RegisterPage() {
 
             Swal.close();
 
-            // 🔴 ERROR POPUP
             Swal.fire({
                 icon: "error",
                 title: "Register gagal!",
@@ -106,7 +105,6 @@ export default function RegisterPage() {
 
     return (
         <div className="w-full h-screen flex flex-col md:flex-row">
-
             <div className="w-full md:w-1/2 h-96 md:h-screen">
                 <div className="left-side w-full h-full flex flex-col items-center justify-center px-10 text-center">
                     <h1 className="text-white font-satoshi text-3xl md:text-4xl font-bold">
@@ -160,10 +158,7 @@ export default function RegisterPage() {
 
                     <div className="mb-1">
                         <label className="text-sm font-semibold">Role</label>
-
                         <div className="flex items-center gap-2 mt-2">
-
-                            {/* Tenant */}
                             <div 
                                 onClick={() => setRole("Tenant")}
                                 className={`
@@ -183,7 +178,6 @@ export default function RegisterPage() {
                                 `}></span>
                             </div>
 
-                            {/* Property Owner */}
                             <div 
                                 onClick={() => setRole("Property Owner")}
                                 className={`
@@ -256,7 +250,6 @@ export default function RegisterPage() {
                     </div>
 
 
-                    {/* Login Button */}
                     <button
                         onClick={handleRegister}
                         className="w-full bg-main text-white font-semibold py-3 rounded-lg mt-2 hover:opacity-90">
@@ -265,7 +258,9 @@ export default function RegisterPage() {
 
                     <p className="text-center text-sm mt-1 text-gray-600">
                         Already have a Rentverse account?
-                        <span className="text-main font-semibold ml-1 cursor-pointer">Sign In</span>
+                        <NavLink to={"/login"}>
+                            <span className="text-main font-semibold ml-1 cursor-pointer">Sign In</span>
+                        </NavLink>
                     </p>
 
                 </div>

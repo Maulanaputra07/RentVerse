@@ -23,8 +23,6 @@ export default function Footer() {
                         The trusted platform for finding your perfect home, 
                         whether you're buying, renting, or selling.
                     </p>
-
-                    {/* Social Icons */}
                     <div className="flex gap-4 mt-5">
                         <img src={instagramIcon} className="w-6 h-6 cursor-pointer" />
                         <img src={youtubeIcon} className="w-6 h-6 cursor-pointer" />
@@ -33,8 +31,6 @@ export default function Footer() {
                         <img src={xIcon} className="w-6 h-6 cursor-pointer" />
                     </div>
                 </div>
-
-                {/* QUICK LINKS */}
                 <div>
                     <h3 className="font-semibold text-lg mb-4">Quick Links</h3>
                     <ul className="space-y-2 text-gray-300 text-sm">
@@ -45,8 +41,6 @@ export default function Footer() {
                         <li className="hover:text-white cursor-pointer">About us</li>
                     </ul>
                 </div>
-
-                {/* RESOURCES */}
                 <div>
                     <h3 className="font-semibold text-lg mb-4">Resources</h3>
                     <ul className="space-y-2 text-gray-300 text-sm">
@@ -57,8 +51,6 @@ export default function Footer() {
                         <li className="hover:text-white cursor-pointer">Mortgage Calculator</li>
                     </ul>
                 </div>
-
-                {/* STAY UPDATED */}
                 <div>
                     <h3 className="font-semibold text-lg mb-4">Stay Updated</h3>
                     <p className="text-gray-300 text-sm mb-4 w-60">
