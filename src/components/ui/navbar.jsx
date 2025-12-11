@@ -45,7 +45,7 @@ export default function Navbar(){
                 onClick={() => setOpen(!open)}
             >
                 {open ? 
-                <img src={close} className='w-8 h-8'/>
+                <img src={close} className='w-5 h-5'/>
                 : 
                 <img src={menu} className='w-8 h-8'/>
                 }
