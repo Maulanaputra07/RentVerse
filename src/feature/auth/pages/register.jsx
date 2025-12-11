@@ -5,6 +5,7 @@ import backIcon from '/icons/back_arrow.png';
 import Eye from '/icons/eye.svg'
 import EyeSlash from '/icons/eye-slash.svg'
 import Swal from "sweetalert2";
+import { validateRegister } from "../../../utils/validation";
 
 export default function RegisterPage() {
     const [showPassword, setShowPassword] = useState(false);
@@ -19,47 +20,13 @@ export default function RegisterPage() {
     const navigate = useNavigate()
 
     const handleRegister = async () => {
-        if (!fullName) {
+        const error = validateRegister({fullName, email, password, confirmPassword, role})
+
+        if (error) {
             return Swal.fire({
                 icon: "warning",
-                title: "Full Name wajib diisi!",
-            });
-        }
-
-        if (!email) {
-            return Swal.fire({
-                icon: "warning",
-                title: "Email wajib diisi!",
-            });
-        }
-
-        if (!password) {
-            return Swal.fire({
-                icon: "warning",
-                title: "Password wajib diisi!",
-            });
-        }
-
-        if (!confirmPassword) {
-            return Swal.fire({
-                icon: "warning",
-                title: "Konfirmasi password wajib diisi!",
-            });
-        }
-
-        if (password !== confirmPassword) {
-            return Swal.fire({
-                icon: "error",
-                title: "Password tidak cocok!",
-                text: "Pastikan password dan confirm password sama."
-            });
-        }
-
-        if (!role) {
-            return Swal.fire({
-                icon: "warning",
-                title: "Role belum dipilih!",
-            });
+                title: error.message,
+            })
         }
 
         Swal.fire({
@@ -77,11 +44,8 @@ export default function RegisterPage() {
             });
 
             const user = res.data.data;
-            console.log(user.role)
             localStorage.setItem("user", JSON.stringify(user));
-
             Swal.close(); 
-
             Swal.fire({
                 icon: "success",
                 title: "Register berhasil!",
@@ -93,10 +57,7 @@ export default function RegisterPage() {
             if (user.role === "Property Owner") navigate("/owner");
 
         } catch (err) {
-            console.error(err);
-
             Swal.close();
-
             Swal.fire({
                 icon: "error",
                 title: "Register gagal!",

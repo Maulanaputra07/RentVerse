@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import backIcon from '/icons/back_arrow.png';
 import Eye from '/icons/eye.svg'
 import EyeSlash from '/icons/eye-slash.svg'
+import { validateLogin } from "../../../utils/validation";
 
 export default function LoginPage() {
     const [showPassword, setShowPassword] = useState(false);
@@ -17,44 +18,13 @@ export default function LoginPage() {
     const navigate = useNavigate()
 
     const handleLogin = async () => {
+        const error = validateLogin({email, password})
 
-        if (!email) {
+        if (error) {
             return Swal.fire({
                 icon: "warning",
-                title: "Email wajib diisi",
-                text: "Silakan masukkan email kamu.",
-            });
-        }
-
-        if (!password) {
-            return Swal.fire({
-                icon: "warning",
-                title: "Password wajib diisi",
-                text: "Silakan masukkan password kamu.",
-            });
-        }
-
-        if (password.length < 6) {
-            return Swal.fire({
-                icon: "warning",
-                title: "Password terlalu pendek",
-                text: "Password minimal 6 karakter.",
-            });
-        }
-
-        if (!confirmPassword) {
-            return Swal.fire({
-                icon: "warning",
-                title: "Konfirmasi password wajib diisi!",
-            });
-        }
-
-        if (password !== confirmPassword) {
-            return Swal.fire({
-                icon: "error",
-                title: "Password tidak cocok!",
-                text: "Pastikan password dan confirm password sama."
-            });
+                title: error.message
+            })
         }
 
         Swal.fire({
@@ -66,14 +36,10 @@ export default function LoginPage() {
 
         try {
             const res = await AuthAPI.login({ email, password });
-
             const user = res.data.data;
-            console.log(user.role)
-
             localStorage.setItem("user", JSON.stringify(user));
-
             Swal.close();
-
+            
             Swal.fire({
                 icon: "success",
                 title: "Login Berhasil!",
