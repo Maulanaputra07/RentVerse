@@ -1,5 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Libertinus+Serif+Display&display=swap');
 @import "tailwindcss";
 
-@theme{
+@font-face {
+    font-family: 'Satoshi';
+    src: url('/font/Satoshi-Variable.ttf') format('truetype');
+    font-weight: 100 900;
+    font-display: swap;
+}
+
+@theme {
+    --font-display: "Libertinus Serif Display", serif;
+    --font-satoshi: "Satoshi", sans-serif;
+
     --color-main: #F99933;
+    --color-main_brown: #190D00;
+    --color-soft_orange: #FEF2E5;
+    --color-slate: {
+        800: #36404E;
+    };
+
+}
+
+.title-hero{
+    background-image: url("/images/image1.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+.stats-info > div{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5;
+}
+
+.left-side{
+    background-image: url('/images/image14.png');
+    background-size: cover;
+    background-position: center;
 }
