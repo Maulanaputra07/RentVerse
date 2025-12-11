@@ -5,6 +5,9 @@ import LoginPage from "../../feature/auth/pages/login";
 import OwnerLayout from "../../components/layouts/ownerLayout";
 import DashboardOwner from "../../feature/owner/pages/dashboardOwner";
 import RegisterPage from "../../feature/auth/pages/register";
+import TenantLayout from "../../components/layouts/tenantLayout";
+import DashboardTenant from "../../feature/tenant/pages/dashboardTenant";
+import ProtectedRoute from "../../feature/auth/components/protectedRoute";
 
 const router = createBrowserRouter([
     {
@@ -16,18 +19,27 @@ const router = createBrowserRouter([
     { path: "/login", element: <LoginPage/> },
     { path: "/register", element: <RegisterPage/>},
     {
-        element: <OwnerLayout/>,
+        element: <ProtectedRoute role="Tenant" />,
         children: [
-            {path: "/owner", element: <DashboardOwner/>}
+            {
+                element: <TenantLayout />,
+                children: [
+                    { path: "/tenant", element: <DashboardTenant /> }
+                ]
+            }
         ]
-    }
-    // {
-    //     path: "/owner",
-    //     element: <AdminLayouts />,
-    //     children: [
-    //         {path: "/owner"}
-    //     ]
-    // }
+    },
+    {
+        element: <ProtectedRoute role="Property Owner" />,
+        children: [
+            {
+                element: <OwnerLayout />,
+                children: [
+                    { path: "/owner", element: <DashboardOwner /> }
+                ]
+            }
+        ]
+    },
 ])
 
 export default router;

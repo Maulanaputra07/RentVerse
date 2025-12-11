@@ -1,36 +1,108 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthAPI from "../../../api/endpoints/auth";
+import Swal from "sweetalert2";
 
 export default function RegisterPage() {
     const [showPassword, setShowPassword] = useState(false);
     const [agree, setAgree] = useState(false);
     const [email, setEmail] = useState("");
+    const [fullName, setFullName] = useState("");
     const [password, setPassword] = useState("");
+    const [confirmPassword, setConfrimPassword] = useState("");
     const [role, setRole] = useState("Tenant");
 
 
     const navigate = useNavigate()
 
-    const handleLogin = async () => {
-        if (!email || !password) {
-            alert("Email dan password wajib di isi");
-            return;
+    const handleRegister = async () => {
+        if (!fullName) {
+            return Swal.fire({
+                icon: "warning",
+                title: "Full Name wajib diisi!",
+            });
         }
+
+        if (!email) {
+            return Swal.fire({
+                icon: "warning",
+                title: "Email wajib diisi!",
+            });
+        }
+
+        if (!password) {
+            return Swal.fire({
+                icon: "warning",
+                title: "Password wajib diisi!",
+            });
+        }
+
+        if (!confirmPassword) {
+            return Swal.fire({
+                icon: "warning",
+                title: "Konfirmasi password wajib diisi!",
+            });
+        }
+
+        if (password !== confirmPassword) {
+            return Swal.fire({
+                icon: "error",
+                title: "Password tidak cocok!",
+                text: "Pastikan password dan confirm password sama."
+            });
+        }
+
+        if (!role) {
+            return Swal.fire({
+                icon: "warning",
+                title: "Role belum dipilih!",
+            });
+        }
+
+        Swal.fire({
+            title: "Registering...",
+            text: "Please wait",
+            allowOutsideClick: false,
+            didOpen: () => Swal.showLoading(),
+        });
+
+        console.log(fullName)
 
         try {
-            const res = await AuthAPI.login({email, password});
+            const res = await AuthAPI.register({
+                fullName, email, password, role
+            });
 
             const user = res.data.data;
-            console.log("user", user)
-
+            console.log(user.role)
             localStorage.setItem("user", JSON.stringify(user));
-            navigate("/owner")
-        }catch(err) {
+
+            Swal.close(); 
+
+            Swal.fire({
+                icon: "success",
+                title: "Register berhasil!",
+                timer: 1500,
+                showConfirmButton: false
+            });
+
+            if (user.role === "Tenant") navigate("/tenant");
+            if (user.role === "Property Owner") navigate("/owner");
+
+        } catch (err) {
             console.error(err);
-            alert("Login gagal! Periksa email / password kamu.");
+
+            Swal.close();
+
+            // 🔴 ERROR POPUP
+            Swal.fire({
+                icon: "error",
+                title: "Register gagal!",
+                text: err?.response?.data?.message || "Coba lagi nanti.",
+            });
         }
-    }
+    };
+
 
     return (
         <div className="w-full h-screen flex flex-col md:flex-row">
@@ -60,19 +132,18 @@ export default function RegisterPage() {
                 "
             >
                 <div className="w-full max-w-full px-4">
-
-                    <h2 className="text-center text-2xl font-bold ">
+                    <h2 className="text-center text-xl font-bold ">
                         Register Now
                     </h2>
 
                     <div className="mb-1">
                         <label className="text-sm font-semibold">Fullname</label>
                         <input 
-                            type="email"
-                            placeholder="yourname@gmail.com"
-                            className="w-full border p-3 rounded-lg mt-1 focus:ring-2 focus:ring-main outline-none"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            type="text"
+                            placeholder="your name"
+                            className="w-full border p-2 rounded-lg mt-1 focus:ring-2 focus:ring-main outline-none"
+                            value={fullName}
+                            onChange={(e) => setFullName(e.target.value)}
                         />
                     </div>
 
@@ -81,7 +152,7 @@ export default function RegisterPage() {
                         <input 
                             type="email"
                             placeholder="yourname@gmail.com"
-                            className="w-full border p-3 rounded-lg mt-1 focus:ring-2 focus:ring-main outline-none"
+                            className="w-full border p-2 rounded-lg mt-1 focus:ring-2 focus:ring-main outline-none"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
@@ -90,7 +161,7 @@ export default function RegisterPage() {
                     <div className="mb-1">
                         <label className="text-sm font-semibold">Role</label>
 
-                        <div className="flex items-center gap-3 mt-2">
+                        <div className="flex items-center gap-2 mt-2">
 
                             {/* Tenant */}
                             <div 
@@ -134,7 +205,6 @@ export default function RegisterPage() {
                             
                         </div>
 
-                        {/* Role description */}
                         <p className="text-xs text-gray-600 mt-2">
                             {role === "Tenant"
                                 ? "*Choose this if you are looking to search for and book an apartment"
@@ -147,25 +217,20 @@ export default function RegisterPage() {
                         <input 
                             type={showPassword ? "text" : "password"}
                             placeholder="*************"
-                            className="w-full border p-3 rounded-lg mt-1 focus:ring-2 focus:ring-main outline-none"
+                            className="w-full border p-2 rounded-lg mt-1 focus:ring-2 focus:ring-main outline-none"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
-                        {/* <span
-                            className="text-main text-sm cursor-pointer select-none"
-                            onClick={() => setShowPassword(!showPassword)}
-                        >
-                            {showPassword ? "Hide" : "Show"} password
-                        </span> */}
                     </div>
 
-                    {/* Confirm Password */}
                     <div className="mb-1">
                         <label className="text-sm font-semibold">Confirm Password</label>
                         <input 
                             type={showPassword ? "text" : "password"}
                             placeholder="*************"
-                            className="w-full border p-3 rounded-lg mt-1 focus:ring-2 focus:ring-main outline-none"
+                            onChange={(e) => setConfrimPassword(e.target.value)}
+                            value={confirmPassword}
+                            className="w-full border p-2 rounded-lg mt-1 focus:ring-2 focus:ring-main outline-none"
                         />
                     </div>
 
@@ -193,7 +258,7 @@ export default function RegisterPage() {
 
                     {/* Login Button */}
                     <button
-                        onClick={handleLogin}
+                        onClick={handleRegister}
                         className="w-full bg-main text-white font-semibold py-3 rounded-lg mt-2 hover:opacity-90">
                         Next
                     </button>

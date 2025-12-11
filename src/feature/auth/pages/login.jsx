@@ -50,6 +50,8 @@ export default function LoginPage() {
             const res = await AuthAPI.login({ email, password });
 
             const user = res.data.data;
+            console.log(user.role)
+
             localStorage.setItem("user", JSON.stringify(user));
 
             // TUTUP LOADING
@@ -64,7 +66,8 @@ export default function LoginPage() {
                 showConfirmButton: false,
             });
 
-            navigate("/owner");
+            if (user.role === "Tenant") navigate("/tenant");
+            if (user.role === "Property Owner") navigate("/owner");
 
         } catch (err) {
             // TUTUP LOADING OTOMATIS & TAMPILKAN ERROR

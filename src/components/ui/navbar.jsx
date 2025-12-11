@@ -7,13 +7,19 @@ import { useState } from 'react'
 export default function Navbar(){
     const [open, setOpen] = useState(false)
 
+    const navClass = ({ isActive }) =>
+    isActive 
+        ? "text-main font-semibold" 
+        : "text-gray-700 hover:text-main";
+
+
     return (
         <nav className="w-full flex justify-between p-5 items-center border-b border-gray-200 font-satoshi font-semibold">
             <div className='flex items-center gap-4'>
                 <img src={metairFlowLogo} className='w-16 h-12' alt="MetairFlow Logo" />
 
                 <div className='hidden md:flex gap-10 ml-10'>
-                    <NavLink to="/">Home</NavLink>
+                    <NavLink to="/" className={navClass}>Home</NavLink>
                     <NavLink to="/">Property</NavLink>
                     <NavLink to="/">About Us</NavLink>
                     <NavLink to="/">Contact</NavLink>
@@ -47,7 +53,7 @@ export default function Navbar(){
 
             {open && (
                 <div className="absolute top-20 left-0 w-full bg-white shadow-lg p-5 flex flex-col gap-4 md:hidden z-50">
-                    <NavLink to="/" onClick={() => setOpen(false)}>Home</NavLink>
+                    <NavLink to="/" className={navClass} onClick={() => setOpen(false)}>Home</NavLink>
                     <NavLink to="/" onClick={() => setOpen(false)}>Property</NavLink>
                     <NavLink to="/" onClick={() => setOpen(false)}>About Us</NavLink>
                     <NavLink to="/" onClick={() => setOpen(false)}>Contact</NavLink>
@@ -59,7 +65,7 @@ export default function Navbar(){
                             </button>
                         </NavLink>
 
-                        <NavLink to="/" onClick={() => setOpen(false)}>
+                        <NavLink to="/register" onClick={() => setOpen(false)}>
                             <button className='bg-main text-white font-semibold px-4 py-2 rounded-xl w-full'>
                                 Register
                             </button>
