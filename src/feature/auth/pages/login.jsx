@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthAPI from "../../../api/endpoints/auth";
+import Swal from "sweetalert2";
 
 export default function LoginPage() {
     const [showPassword, setShowPassword] = useState(false);
@@ -10,24 +11,71 @@ export default function LoginPage() {
     const navigate = useNavigate()
 
     const handleLogin = async () => {
-        if (!email || !password) {
-            alert("Email dan password wajib di isi");
-            return;
+
+        // VALIDASI — semuanya pakai SweetAlert
+        if (!email) {
+            return Swal.fire({
+                icon: "warning",
+                title: "Email wajib diisi",
+                text: "Silakan masukkan email kamu.",
+            });
         }
 
+        if (!password) {
+            return Swal.fire({
+                icon: "warning",
+                title: "Password wajib diisi",
+                text: "Silakan masukkan password kamu.",
+            });
+        }
+
+        if (password.length < 6) {
+            return Swal.fire({
+                icon: "warning",
+                title: "Password terlalu pendek",
+                text: "Password minimal 6 karakter.",
+            });
+        }
+
+        // SHOW LOADING
+        Swal.fire({
+            title: "Logging in...",
+            text: "Please wait",
+            allowOutsideClick: false,
+            didOpen: () => Swal.showLoading()
+        });
+
+        // API REQUEST
         try {
-            const res = await AuthAPI.login({email, password});
+            const res = await AuthAPI.login({ email, password });
 
             const user = res.data.data;
-            console.log("user", user)
-
             localStorage.setItem("user", JSON.stringify(user));
-            navigate("/owner")
-        }catch(err) {
-            console.error(err);
-            alert("Login gagal! Periksa email / password kamu.");
+
+            // TUTUP LOADING
+            Swal.close();
+
+            // POPUP SUCCESS
+            Swal.fire({
+                icon: "success",
+                title: "Login Berhasil!",
+                text: `Welcome back, ${user.fullname}!`,
+                timer: 1400,
+                showConfirmButton: false,
+            });
+
+            navigate("/owner");
+
+        } catch (err) {
+            // TUTUP LOADING OTOMATIS & TAMPILKAN ERROR
+            Swal.fire({
+                icon: "error",
+                title: "Login gagal!",
+                text: "Email atau password salah!",
+            });
         }
-    }
+    };
+
 
     return (
         <div className="w-full h-screen flex flex-col md:flex-row">
