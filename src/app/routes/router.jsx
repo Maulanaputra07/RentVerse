@@ -4,6 +4,7 @@ import WelcomeLayouts from "../../components/layouts/welcomeLayouts";
 import LoginPage from "../../feature/auth/pages/login";
 import OwnerLayout from "../../components/layouts/ownerLayout";
 import DashboardOwner from "../../feature/owner/pages/dashboardOwner";
+import RegisterPage from "../../feature/auth/pages/register";
 
 const router = createBrowserRouter([
     {
@@ -12,9 +13,8 @@ const router = createBrowserRouter([
             {path: "/", element: <WelcomePage />},
         ]
     },
-    {
-        path: "/login", element: <LoginPage/>
-    },
+    { path: "/login", element: <LoginPage/> },
+    { path: "/register", element: <RegisterPage/>},
     {
         element: <OwnerLayout/>,
         children: [

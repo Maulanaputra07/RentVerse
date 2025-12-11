@@ -27,7 +27,7 @@ export default function Navbar(){
                     </button>
                 </NavLink>
 
-                <NavLink to="/">
+                <NavLink to="/register">
                     <button className='bg-main text-white border-main border-2 font-semibold px-5 py-2 rounded-xl'>
                         Register
                     </button>
