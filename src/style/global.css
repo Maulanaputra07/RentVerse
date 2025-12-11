@@ -23,7 +23,7 @@
 }
 
 .title-hero{
-    background-image: url("/images/image1.webp");
+    background-image: url("/images/image1.webp") !important;
     background-size: cover;
     background-position: center;
 }
@@ -40,7 +40,7 @@
 
 .left-side{
     background-color: #EFF1F4;
-    background-image: url('/images/image14.webp');
+    background-image: url('/images/image14.webp') !important;
     background-size: cover;
     background-position: center;
 }
