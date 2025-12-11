@@ -19,6 +19,7 @@ export default function LoginPage() {
             const res = await AuthAPI.login({email, password});
 
             const user = res.data.data;
+            console.log("user", user)
 
             localStorage.setItem("user", JSON.stringify(user));
             navigate("/owner")
