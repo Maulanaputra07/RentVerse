@@ -2,6 +2,9 @@ import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import AuthAPI from "../../../api/endpoints/auth";
 import Swal from "sweetalert2";
+import backIcon from '/icons/back_arrow.png';
+import Eye from '/icons/eye.svg'
+import EyeSlash from '/icons/eye-slash.svg'
 
 export default function LoginPage() {
     const [showPassword, setShowPassword] = useState(false);
@@ -120,48 +123,63 @@ export default function LoginPage() {
                 "
             >
                 <div className="w-full max-w-full">
+                    <div className="relative flex items-center justify-center mb-8">
+                        <img
+                            src={backIcon}
+                            alt="Back"
+                            className="w-6 h-6 absolute left-0 cursor-pointer"
+                            onClick={() => navigate("/")}
+                        />
 
-                    <h2 className="text-center text-2xl font-bold mb-8">
-                        Login Now
-                    </h2>
+                        <h2 className="text-2xl font-bold text-center">
+                            Login Now
+                        </h2>
+                    </div>
 
                     <div className="mb-5">
                         <label className="text-sm font-semibold">Email</label>
                         <input 
                             type="email"
                             placeholder="yourname@gmail.com"
-                            className="w-full border p-3 rounded-lg mt-1 focus:ring-2 focus:ring-main outline-none"
+                            className="w-full border border-soft_gray p-3 rounded-lg mt-1 focus:ring-2 bg-soft_orange focus:ring-soft_orange outline-none"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
 
-                    <div className="mb-5">
+                    <div className="mb-5 relative">
                         <label className="text-sm font-semibold">Password</label>
                         <input 
                             type={showPassword ? "text" : "password"}
                             placeholder="*************"
-                            className="w-full border p-3 rounded-lg mt-1 focus:ring-2 focus:ring-main outline-none"
+                            className="w-full border border-soft_gray p-3 rounded-lg mt-1 focus:ring-2 bg-soft_orange focus:ring-soft_orange outline-none pr-10" 
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
                         <span
-                            className="text-main text-sm cursor-pointer select-none"
+                            className="absolute right-3 top-[35%] translate-y-1/2 text-main cursor-pointer select-none"
                             onClick={() => setShowPassword(!showPassword)}
                         >
-                            {showPassword ? "Hide" : "Show"} password
+                            {showPassword ? <img src={Eye}/> : <img src={EyeSlash} />}
                         </span>
                     </div>
 
-                    <div className="mb-5">
+
+                    <div className="mb-5 relative">
                         <label className="text-sm font-semibold">Confirm Password</label>
                         <input 
                             type={showPassword ? "text" : "password"}
                             placeholder="*************"
                             onChange={(e) => setConfrimPassword(e.target.value)}
                             value={confirmPassword}
-                            className="w-full border p-3 rounded-lg mt-1 focus:ring-2 focus:ring-main outline-none"
+                            className="w-full border border-soft_gray bg-soft_orange p-3 rounded-lg mt-1 focus:ring-2 focus:ring-soft_orange outline-none"
                         />
+                        <span
+                            className="absolute right-3 top-[35%] translate-y-1/2 text-main cursor-pointer select-none"
+                            onClick={() => setShowPassword(!showPassword)}
+                        >
+                            {showPassword ? <img src={Eye}/> : <img src={EyeSlash} />}
+                        </span>
                     </div>
 
                     <div className="mt-3 flex items-start gap-2">

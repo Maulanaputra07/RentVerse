@@ -1,6 +1,8 @@
 export default function Card({ status, title, location, price, priceUnit, bedrooms, bathrooms, sqft, image }) {
     return (
         <div className="w-80 h-[400px] bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 flex flex-col">
+            
+            {/* Image + status */}
             <div className="relative w-full h-48">
                 <img 
                     src={image} 
@@ -12,23 +14,26 @@ export default function Card({ status, title, location, price, priceUnit, bedroo
                 </span>
             </div>
 
+            {/* Content */}
             <div className="flex flex-col justify-between flex-1 p-5 text-left">
+
+                {/* Title and location */}
                 <div>
-                    <h2 className="font-satoshi font-semibold text-lg">
-                        {title}
-                    </h2>
-
-                    <p className="text-gray-500 text-sm mt-1">
-                        {location}
-                    </p>
-
-                    <p className="text-main font-semibold text-lg mt-3">
-                        RM{price}
-                        <span className="text-sm font-normal">/mo</span>
-                    </p>
+                    <h2 className="font-satoshi font-semibold text-lg">{title}</h2>
+                    <p className="text-gray-500 text-sm mt-1 truncate">{location}</p>
                 </div>
 
-                <div className="flex items-center justify-between mt-2 pt-2 ">
+                {/* Price */}
+                <p className="text-main font-semibold text-lg mt-3">
+                    RM{price}
+                    <span className="text-sm font-normal">/{priceUnit || 'mo'}</span>
+                </p>
+
+                {/* Divider line */}
+                <div className="border-t border-gray-200 mt-2 pt-2"></div>
+
+                {/* Bedrooms, bathrooms, sqft */}
+                <div className="flex items-center justify-between mt-2">
                     <div className="flex flex-col items-center text-sm">
                         <div className="flex items-center gap-1">
                             <img src="/icons/bed.png" className="w-5 h-5" />

@@ -1,8 +1,18 @@
+import { useState } from "react";
 import Card from "../components/ui/card";
 import SearchBar from "../components/ui/serachBar";
 import propertyData from "../data/propertyData";
 
 export default function WelcomePage(){
+    const [filteredProperties, setFilteredProperties] = useState(propertyData);
+
+    const handleSearch = (query) => {
+        const filtered = propertyData.filter(item =>
+            item.location.toLowerCase().includes(query.toLowerCase())
+        );
+        setFilteredProperties(filtered);
+    };
+
     return(
         <div className="w-full">
             <div className="title-hero flex items-center justify-center w-full md:h-96 h-52 text-4xl">
@@ -12,7 +22,7 @@ export default function WelcomePage(){
                 </div>
             </div>
             <div className="w-full flex items-center justify-center relative md:-top-10 -top-5">
-                <SearchBar/>
+                <SearchBar onSearch={handleSearch}/>
             </div>
             <div className="w-full h-full flex flex-col items-center justify-center px-5">
                 <h1 className="text-main text-center font-display py-5 md:text-4xl text-2xl">Trusted by Hundreds, Recognized for Excellence</h1>
@@ -45,20 +55,10 @@ export default function WelcomePage(){
                     gap-6 
                     py-8
                 ">
-                    {propertyData.map(item => (
+                    {filteredProperties.map(item => (
                         <div
                             key={item.id}
-                            className="
-                                rounded-2xl
-                                overflow-hidden
-                                bg-white
-                                shadow-sm
-                                border border-gray-100
-                                transition-all
-                                duration-300
-                                hover:shadow-xl
-                                hover:-translate-y-2
-                            "
+                            className="rounded-2xl overflow-hidden bg-white shadow-sm border border-gray-100 transition-all duration-300 hover:shadow-xl hover:-translate-y-2"
                         >
                             <Card {...item} />
                         </div>

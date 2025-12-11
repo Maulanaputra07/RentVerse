@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import AuthAPI from "../../../api/endpoints/auth";
+import backIcon from '/icons/back_arrow.png';
+import Eye from '/icons/eye.svg'
+import EyeSlash from '/icons/eye-slash.svg'
 import Swal from "sweetalert2";
 
 export default function RegisterPage() {
@@ -130,16 +133,24 @@ export default function RegisterPage() {
                 "
             >
                 <div className="w-full max-w-full px-4">
-                    <h2 className="text-center text-xl font-bold ">
-                        Register Now
-                    </h2>
+                    <div className="relative flex items-center justify-center mb-3">
+                        <img
+                            src={backIcon}
+                            alt="Back"
+                            className="w-6 h-6 absolute left-0 cursor-pointer"
+                            onClick={() => navigate("/")}
+                        />
+                        <h2 className="text-center text-xl font-bold ">
+                            Register Now
+                        </h2>
+                    </div>
 
                     <div className="mb-1">
                         <label className="text-sm font-semibold">Fullname</label>
                         <input 
                             type="text"
                             placeholder="your name"
-                            className="w-full border p-2 rounded-lg mt-1 focus:ring-2 focus:ring-main outline-none"
+                            className="w-full border border-soft_gray bg-soft_orange p-2 rounded-lg mt-1 focus:ring-2 focus:ring-soft_orange outline-none"
                             value={fullName}
                             onChange={(e) => setFullName(e.target.value)}
                         />
@@ -150,7 +161,7 @@ export default function RegisterPage() {
                         <input 
                             type="email"
                             placeholder="yourname@gmail.com"
-                            className="w-full border p-2 rounded-lg mt-1 focus:ring-2 focus:ring-main outline-none"
+                            className="w-full border border-soft_gray bg-soft_orange p-2 rounded-lg mt-1 focus:ring-2 focus:ring-soft_orange outline-none"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
@@ -163,7 +174,7 @@ export default function RegisterPage() {
                                 onClick={() => setRole("Tenant")}
                                 className={`
                                     w-1/2 flex items-center justify-between 
-                                    border rounded-xl px-4 py-3 cursor-pointer
+                                    border border-soft_gray rounded-xl px-4 py-3 cursor-pointer
                                     transition-all duration-200
                                     ${role === "Tenant" ? "border-main bg-white" : "border-gray-300 bg-gray-50"}
                                 `}
@@ -206,33 +217,45 @@ export default function RegisterPage() {
                         </p>
                     </div>
 
-                    <div className="mb-1">
+                    <div className="mb-1 relative">
                         <label className="text-sm font-semibold">Password</label>
                         <input 
                             type={showPassword ? "text" : "password"}
                             placeholder="*************"
-                            className="w-full border p-2 rounded-lg mt-1 focus:ring-2 focus:ring-main outline-none"
+                            className="w-full border border-soft_gray p-3 rounded-lg mt-1 focus:ring-2 bg-soft_orange focus:ring-soft_orange outline-none pr-10"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
+                        <span
+                            className="absolute right-3 top-[35%] translate-y-1/2 text-main cursor-pointer select-none"
+                            onClick={() => setShowPassword(!showPassword)}
+                        >
+                            {showPassword ? <img src={Eye}/> : <img src={EyeSlash} />}
+                        </span>
                     </div>
 
-                    <div className="mb-1">
+                    <div className="mb-1 relative">
                         <label className="text-sm font-semibold">Confirm Password</label>
                         <input 
                             type={showPassword ? "text" : "password"}
                             placeholder="*************"
                             onChange={(e) => setConfrimPassword(e.target.value)}
                             value={confirmPassword}
-                            className="w-full border p-2 rounded-lg mt-1 focus:ring-2 focus:ring-main outline-none"
+                            className="w-full border border-soft_gray bg-soft_orange p-3 rounded-lg mt-1 focus:ring-2 focus:ring-soft_orange outline-none"
                         />
+                        <span
+                            className="absolute right-3 top-[35%] translate-y-1/2 text-main cursor-pointer select-none"
+                            onClick={() => setShowPassword(!showPassword)}
+                        >
+                            {showPassword ? <img src={Eye}/> : <img src={EyeSlash} />}
+                        </span>
                     </div>
 
                     <div className="mt-3 flex items-start gap-2">
                         <input
                             type="checkbox"
                             id="agree"
-                            className="mt-1 w-4 h-4 text-main border-gray-300 rounded focus:ring-main accent-main"
+                            className="mt-1 w-4 h-4 text-main border-gray-300 rounded focus:ring-soft_orange accent-main"
                             checked={agree}
                             onChange={(e) => setAgree(e.target.checked)}
                         />
