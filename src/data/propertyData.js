@@ -9,7 +9,7 @@ const propertyData = [
         bedrooms: 3,
         bathrooms: 1,
         sqft: 500,
-        image: "/images/image10.png"
+        image: "/images/image10.webp"
     },
     {
         id: 2,
@@ -21,7 +21,7 @@ const propertyData = [
         bedrooms: 4,
         bathrooms: 2,
         sqft: 900,
-        image: "/images/image10.png"
+        image: "/images/image10.webp"
     },
     {
         id: 3,
@@ -33,7 +33,7 @@ const propertyData = [
         bedrooms: 1,
         bathrooms: 1,
         sqft: 300,
-        image: "/images/image10.png"
+        image: "/images/image10.webp"
     },
     {
         id: 4,
@@ -45,7 +45,7 @@ const propertyData = [
         bedrooms: 3,
         bathrooms: 2,
         sqft: 750,
-        image: "/images/image10.png"
+        image: "/images/image10.webp"
     }
 ];
 

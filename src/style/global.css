@@ -22,7 +22,7 @@
 }
 
 .title-hero{
-    background-image: url("/images/image1.jpg");
+    background-image: url("/images/image1.webp");
     background-size: cover;
     background-position: center;
 }
@@ -37,7 +37,7 @@
 }
 
 .left-side{
-    background-image: url('/images/image14.png');
+    background-image: url('/images/image14.webp');
     background-size: cover;
     background-position: center;
 }
